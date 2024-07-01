@@ -1,0 +1,46 @@
+use this code for auth and use use lib google api js client and retrieve products using content api:
+i have these 
+creds:
+const CLIENT_ID = "1071167725958-9edrhuv5psrtuidp4d0582kcnupaukjl.apps.googleusercontent.com";
+ const API_KEY = "AIzaSyB6KdfrJaEzgxmarfitK6Rll4qyN3B7FeE"; 
+ const MERCHANT_ID = "5390490385"; 
+ I dont want to authorize using sign in button and generate access token using client id
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Content API</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        const CLIENT_ID = "1071167725958-9edrhuv5psrtuidp4d0582kcnupaukjl.apps.googleusercontent.com";
+        const API_KEY = "AIzaSyB6KdfrJaEzgxmarfitK6Rll4qyN3B7FeE";
+        const MERCHANT_ID = "5390490385";
+
+        function initClient() {
+            gapi.client.init({
+                'apiKey': API_KEY,
+                'clientId': CLIENT_ID,
+                'scope': 'https://www.googleapis.com/auth/content',
+                'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/content/v2/rest']
+            }).then(function () {
+                gapi.client.load('content', 'v2').then(function () {
+                    gapi.client.content.products.list({
+                        'merchantId': MERCHANT_ID
+                    }).then(function (response) {
+                        console.log(response.result);
+                    });
+                });
+            });
+        }
+
+        function handleClientLoad() {
+            gapi.load('client:auth2', initClient);
+        }
+    </script>
+</head>
+<body>
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+</body>
+    
+</html>
